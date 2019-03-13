@@ -1,7 +1,7 @@
 venv 
 .vscode
 __pycache__
-users.db
+database.db
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
