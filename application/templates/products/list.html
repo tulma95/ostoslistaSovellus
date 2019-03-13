@@ -1,0 +1,26 @@
+{% extends "layout.html" %} {% block body %}
+<table>
+    <tr>
+        <th>product name</th>
+        <th>price each</th>
+        <th>count</th>
+    </tr>
+    {% for product in products %}
+    <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.count }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('productDecrease', productId = product.id) }}">
+                <input type="submit" value="<">
+            </form>
+        </td>
+        <td>
+            <form method="POST" action="{{ url_for('productAdd', productId = product.id) }}">
+                <input type="submit" value=">">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
