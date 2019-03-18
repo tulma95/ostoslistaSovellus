@@ -1,3 +1,4 @@
+from application.auth import views
 from application.auth import models
 from application.products import views
 from application.products import models
