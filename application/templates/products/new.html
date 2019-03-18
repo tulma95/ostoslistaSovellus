@@ -1,6 +1,28 @@
 {% extends "layout.html" %} {% block body %}
 <form method="POST" action="{{ url_for('productsCreate') }}">
-    <input type="text" name="name">
-    <input type="submit" value="add product">
+    <table>
+        <tr>
+            <td>
+                {{ form.name.label }}
+            </td>
+            <td>
+                {{ form.name }}
+            </td>
+            <td>
+                <ul>
+                    {% for error in form.name.errors %}
+                    <li> {{error}}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                <input type="submit" value="Add product">
+            </td>
+
+        </tr>
+    </table>
 </form>
 {% endblock %}

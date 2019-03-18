@@ -3,9 +3,10 @@ from flask import render_template, request, redirect, url_for
 from application.products.models import Product
 from application.products.forms import ProductForm
 
+
 @app.route("/products/new")
 def productsForm():
-    return render_template("products/new.html", form = ProductForm())
+    return render_template("products/new.html", form=ProductForm())
 
 
 @app.route("/products/<productId>/", methods=["POST"])
@@ -34,7 +35,12 @@ def productsList():
 
 @app.route("/products/", methods=["POST"])
 def productsCreate():
-    newProduct = Product(name=request.form.get("name"),
+    form = ProductForm(request.form)
+
+    if not form.validate():
+        return render_template("products/new.html", form=form)
+
+    newProduct = Product(name=form.name.data,
                          count=1)
 
     db.session().add(newProduct)
