@@ -1,9 +1,0 @@
-{% extends "layout.html" %} {% block body %}
-
-<form method="POST" action="{{ url_for('usersCreate') }}">
-    <input type="text" name="username">
-    <input type="password" name="password">
-    <input type="submit" value="Add new user">
-</form>
-
-{% endblock %}
