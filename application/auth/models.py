@@ -2,25 +2,27 @@ from application import db
 
 
 class User(db.Model):
+
     __tablename__ = "account"
-    id = db.Column(db.integer, primary_key=True)
+
+    id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
                               onupdate=db.func.current_timestamp())
 
-    name = db.Column(db.String(144), nullable=false)
-    username = db.Column(db.String(144), nullable=false)
-    password = db.Column(db.String(144), nullable=false)
+    name = db.Column(db.String(144), nullable=False)
+    username = db.Column(db.String(144), nullable=False)
+    password = db.Column(db.String(144), nullable=False)
 
     def __init__(self, name, username, password):
         self.name = name
         self.username = username
         self.password = password
 
-    def getId(self):
+    def get_id(self):
         return self.id
 
-     def is_active(self):
+    def is_active(self):
         return True
 
     def is_anonymous(self):

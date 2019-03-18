@@ -1,16 +1,17 @@
-from flask import render_template, request, redirect, url_for
 
-from application import app
+from flask import render_template, request, redirect, url_for
 from application.auth.models import User
 from application.auth.forms import LoginForm
+from application import app
 
 
-@app_route("/auth/login", methods=["GET", "POST"])
+@app.route("/auth/login", methods=["GET", "POST"])
 def authLogin():
     if request.method == "GET":
         return render_template("auth/loginform.html", form=LoginForm())
 
     form = LoginForm(request.form)
+    # mahdolliset validoinnit
 
     user = User.query.filter_by(
         username=form.username.data, password=form.password.data).first()
