@@ -1,8 +1,10 @@
 
 from flask import render_template, request, redirect, url_for
+from flask_login import login_user, logout_user
+
+from application import app
 from application.auth.models import User
 from application.auth.forms import LoginForm
-from application import app
 
 
 @app.route("/auth/login", methods=["GET", "POST"])
@@ -19,5 +21,11 @@ def authLogin():
         return render_template("auth/loginform.html", form=form,
                                error="No such username or password")
 
-    print("Käyttäjä " + user.name + " tunnistettiin")
+    login_user(user)
+    return redirect(url_for("index"))
+
+
+@app.route("/auth/logout")
+def authLogout():
+    logout_user()
     return redirect(url_for("index"))

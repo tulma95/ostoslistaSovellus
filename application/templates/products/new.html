@@ -1,28 +1,29 @@
-{% extends "layout.html" %} {% block body %}
+{% extends "layout.html" %}
+{% block body %}
 <form method="POST" action="{{ url_for('productsCreate') }}">
-    <table>
-        <tr>
-            <td>
-                {{ form.name.label }}
-            </td>
-            <td>
-                {{ form.name }}
-            </td>
-            <td>
-                <ul>
-                    {% for error in form.name.errors %}
-                    <li> {{error}}</li>
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-        <tr>
+  <table>
+    <tr>
+      <td>
+        {{ form.name.label }}
+      </td>
+      <td>
+        {{ form.name }}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.name.errors %}
+          <li> {{error}}</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
 
-            <td>
-                <input type="submit" value="Add product">
-            </td>
+      <td>
+        <input type="submit" value="Add product">
+      </td>
 
-        </tr>
-    </table>
+    </tr>
+  </table>
 </form>
 {% endblock %}

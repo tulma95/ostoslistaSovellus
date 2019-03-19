@@ -2,29 +2,36 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>Shoppinglist</title>
+  <meta charset="utf-8">
+  <title>Shoppinglist</title>
 </head>
 
 <body>
 
-    <table>
-        </td>
-        <td>
-            <li>
-                <a href="{{ url_for('productsList') }}">list products</a>
-            </li>
-            <li>
-                <a href="{{ url_for('productsForm') }}">add product</a>
-            </li>
-        </td>
-    </table>
+  {% if current_user.is_authenticated %}
 
-    {% block body %}
-    <p>
-        tekstiä
-    </p>
-    {% endblock %}
+  <p>
+    Kirjautunut nimellä {{ current_user.name }}.
+    <a href="{{ url_for('authLogout') }}">Kirjaudu ulos</a>
+  </p>
+
+  {% else %}
+  <a href="{{ url_for('authLogin') }}">Kirjaudu</a>
+  {% endif %}
+
+  <li>
+    <a href="{{ url_for('productsList') }}">list products</a>
+  </li>
+  <li>
+    <a href="{{ url_for('productsForm') }}">add product</a>
+  </li>
+
+
+  {% block body %}
+  <p>
+    tekstiä
+  </p>
+  {% endblock %}
 </body>
 
 </html>
