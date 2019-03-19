@@ -10,12 +10,12 @@
     <td>{{ product.name }}</td>
     <td>{{ product.count }}</td>
     <td>
-      <form method="POST" action="{{ url_for('productDecrease', productId = product.id) }}">
+      <form method="POST" action="{{ url_for('product_decrease', productId = product.id) }}">
         <input type="submit" value="<">
       </form>
     </td>
     <td>
-      <form method="POST" action="{{ url_for('productAdd', productId = product.id) }}">
+      <form method="POST" action="{{ url_for('product_add', productId = product.id) }}">
         <input type="submit" value=">">
       </form>
     </td>

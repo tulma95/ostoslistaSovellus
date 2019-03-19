@@ -8,7 +8,7 @@ from application.auth.forms import LoginForm
 
 
 @app.route("/auth/login", methods=["GET", "POST"])
-def authLogin():
+def auth_login():
     if request.method == "GET":
         return render_template("auth/loginform.html", form=LoginForm())
 
@@ -26,6 +26,6 @@ def authLogin():
 
 
 @app.route("/auth/logout")
-def authLogout():
+def auth_logout():
     logout_user()
     return redirect(url_for("index"))

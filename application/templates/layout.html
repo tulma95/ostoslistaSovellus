@@ -12,18 +12,18 @@
 
   <p>
     Kirjautunut nimellä {{ current_user.name }}.
-    <a href="{{ url_for('authLogout') }}">Kirjaudu ulos</a>
+    <a href="{{ url_for('auth_logout') }}">Kirjaudu ulos</a>
   </p>
 
   {% else %}
-  <a href="{{ url_for('authLogin') }}">Kirjaudu</a>
+  <a href="{{ url_for('auth_login') }}">Kirjaudu</a>
   {% endif %}
 
   <li>
-    <a href="{{ url_for('productsList') }}">list products</a>
+    <a href="{{ url_for('products_list') }}">list products</a>
   </li>
   <li>
-    <a href="{{ url_for('productsForm') }}">add product</a>
+    <a href="{{ url_for('products_form') }}">add product</a>
   </li>
 
 

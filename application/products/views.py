@@ -1,40 +1,46 @@
-from application import app, db
 from flask import render_template, request, redirect, url_for
+from flask_login import login_required
+
+from application import app, db
 from application.products.models import Product
 from application.products.forms import ProductForm
 
 
-@app.route("/products/new")
-def productsForm():
-    return render_template("products/new.html", form=ProductForm())
-
-
-@app.route("/products/<productId>/", methods=["POST"])
-def productAdd(productId):
-    p = Product.query.get(productId)
-    p.count = p.count + 1
-    db.session().commit()
-
-    return redirect(url_for("productsList"))
-
-
-@app.route("/decrease/<productId>/", methods=["POST"])
-def productDecrease(productId):
-    p = Product.query.get(productId)
-    p.count = p.count - 1
-    db.session().commit()
-
-    return redirect(url_for("productsList"))
-
-
 @app.route("/products/", methods=["GET"])
-def productsList():
+def products_list():
     return render_template("products/list.html",
                            products=Product.query.all())
 
 
+@app.route("/products/new")
+@login_required
+def products_form():
+    return render_template("products/new.html", form=ProductForm())
+
+
+@app.route("/products/<productId>/", methods=["POST"])
+@login_required
+def product_add(productId):
+    p = Product.query.get(productId)
+    p.count = p.count + 1
+    db.session().commit()
+
+    return redirect(url_for("products_list"))
+
+
+@app.route("/decrease/<productId>/", methods=["POST"])
+@login_required
+def product_decrease(productId):
+    p = Product.query.get(productId)
+    p.count = p.count - 1
+    db.session().commit()
+
+    return redirect(url_for("products_list"))
+
+
 @app.route("/products/", methods=["POST"])
-def productsCreate():
+@login_required
+def products_create():
     form = ProductForm(request.form)
 
     if not form.validate():
@@ -46,4 +52,4 @@ def productsCreate():
     db.session().add(newProduct)
     db.session().commit()
 
-    return redirect(url_for("productsList"))
+    return redirect(url_for("products_list"))
