@@ -37,9 +37,9 @@
           </td>
           <td>
             <ul>
-              {% for error in form.name.errors %}
-              <li> {{error}}</li>
-              {% endfor %}
+              {% if error != None  %}
+              <li>{{ error }}</li>
+              {% endif %}
             </ul>
           </td>
         </tr>

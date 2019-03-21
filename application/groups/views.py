@@ -17,12 +17,17 @@ def groups_index():
                            form=GroupForm())
 
 
-@app.route("/groups/<groupId>")
+@app.route("/groups/<groupId>/")
 def group_page(groupId):
+
+    print("-----------------------------------------------")
+    print(request.args.get("error"))
+
     return render_template("products/list.html",
                            products=Product.query.all(),
                            group=Group.query.get(groupId),
-                           form=ProductForm())
+                           form=ProductForm(),
+                           error=request.args.get("error"))
 
 
 @app.route("/groups/new", methods=["POST"])
