@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
+<h1>{{ group.name }}</h1>
 <table>
   <tr>
     <th>product name</th>
@@ -10,16 +11,48 @@
     <td>{{ product.name }}</td>
     <td>{{ product.count }}</td>
     <td>
-      <form method="POST" action="{{ url_for('product_decrease', productId = product.id) }}">
+      <form method="POST" action="{{ url_for('product_decrease', productId = product.id, groupId = group.id) }}">
         <input type="submit" value="<">
       </form>
     </td>
     <td>
-      <form method="POST" action="{{ url_for('product_add', productId = product.id) }}">
+      <form method="POST" action="{{ url_for('product_add', productId = product.id,  groupId = group.id) }}">
         <input type="submit" value=">">
       </form>
     </td>
   </tr>
   {% endfor %}
 </table>
+
+<table>
+  <tr>
+    <form method="POST" action="{{ url_for('products_create', groupId = group.id) }}">
+      <table>
+        <tr>
+          <td>
+            {{ form.name.label }}
+          </td>
+          <td>
+            {{ form.name }}
+          </td>
+          <td>
+            <ul>
+              {% for error in form.name.errors %}
+              <li> {{error}}</li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+        <tr>
+
+          <td>
+            <input type="submit" value="Add product">
+          </td>
+
+        </tr>
+      </table>
+    </form>
+  </tr>
+</table>
+
 {% endblock %}

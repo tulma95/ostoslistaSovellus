@@ -18,38 +18,39 @@ def products_form():
     return render_template("products/new.html", form=ProductForm())
 
 
-@app.route("/products/<productId>/", methods=["POST"])
+@app.route("/products/<productId>/<groupId>", methods=["POST"])
 @login_required
-def product_add(productId):
+def product_add(productId, groupId):
     p = Product.query.get(productId)
     p.count = p.count + 1
     db.session().commit()
 
-    return redirect(url_for("products_list"))
+    return redirect(url_for("group_page", groupId=groupId))
 
 
-@app.route("/decrease/<productId>/", methods=["POST"])
+@app.route("/decrease/<productId>/<groupId>/", methods=["POST"])
 @login_required
-def product_decrease(productId):
+def product_decrease(productId, groupId):
     p = Product.query.get(productId)
     p.count = p.count - 1
     db.session().commit()
 
-    return redirect(url_for("products_list"))
+    return redirect(url_for("group_page", groupId=groupId))
 
 
-@app.route("/products/", methods=["POST"])
+@app.route("/products/<groupId>", methods=["POST"])
 @login_required
-def products_create():
+def products_create(groupId):
     form = ProductForm(request.form)
 
     if not form.validate():
         return render_template("products/new.html", form=form)
 
     newProduct = Product(name=form.name.data,
-                         count=1)
+                         count=1,
+                         groupId=groupId)
 
     db.session().add(newProduct)
     db.session().commit()
 
-    return redirect(url_for("products_list"))
+    return redirect(url_for("group_page", groupId=groupId))

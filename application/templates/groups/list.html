@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+<table>
+  <tr>
+    <th>group name</th>
+  </tr>
+  {% for group in groups %}
+  <tr>
+    <td><a href="{{ url_for('group_page', groupId = group.id) }}"> {{ group.name }} </a></td>
+  </tr>
+  {% endfor %}
+</table>
+
+<form method="POST" action="{{ url_for('groups_create') }}">
+  {{ form.name.label }} {{ form.name }}
+  <input type="submit" value="Add new group">
+</form>
+
+<ul>
+  {% for error in form.name.errors %}
+  <li> {{error}}</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
