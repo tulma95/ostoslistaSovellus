@@ -3,9 +3,16 @@ app = Flask(__name__)
 
 from flask_sqlalchemy import SQLAlchemy
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-app.config["SQLALCHEMY_ECHO"] = True
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+import os
+
+
+if os.environ.get("HEROKU"):
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"    
+    app.config["SQLALCHEMY_ECHO"] = True
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+
 
 db = SQLAlchemy(app)
 
@@ -37,4 +44,7 @@ loginManager.login_message = "Please login to use this functionality"
 def loadUser(userId):
     return User.query.get(userId)
 
-db.create_all()
+try: 
+    db.create_all()
+except:
+    pass
