@@ -20,6 +20,13 @@
         <input type="submit" value=">">
       </form>
     </td>
+
+    <td>
+      <form method="POST" action="{{ url_for('product_remove', productId = product.id,  groupId = group.id) }}">
+        <input type="submit" value="x">
+      </form>
+    </td>
+
   </tr>
   {% endfor %}
 </table>

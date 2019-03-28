@@ -11,6 +11,11 @@ def products_list():
     return render_template("products/list.html",
                            products=Product.query.all())
 
+@app.route("/products/remove/<productId>/<groupId>", methods=["POST"])
+def product_remove(productId, groupId):
+    Product.query.filter_by(id=productId).delete()
+    db.session().commit()
+    return redirect(url_for("group_page", groupId=groupId))
 
 @app.route("/products/new")
 @login_required
@@ -23,7 +28,7 @@ def products_form():
 def product_add(productId, groupId):
     p = Product.query.get(productId)
     p.count = p.count + 1
-    db.session().commit()
+    db.session.commit()
 
     return redirect(url_for("group_page", groupId=groupId))
 
@@ -33,7 +38,7 @@ def product_add(productId, groupId):
 def product_decrease(productId, groupId):
     p = Product.query.get(productId)
     p.count = p.count - 1
-    db.session().commit()
+    db.session.commit()
 
     return redirect(url_for("group_page", groupId=groupId))
 
