@@ -1,13 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1>{{ group.name }}
+<p>
+  <h1>{{ group.name }}</h1>
   <form action="{{ url_for('group_info', groupId = group.id) }}">
     <input type="submit" value="info">
   </form>
-</h1>
+</p>
 <table>
   <tr>
-    <th>product name</th>
+    <th>product&emsp;</th>
     <th>count</th>
   </tr>
   {% for product in products %}

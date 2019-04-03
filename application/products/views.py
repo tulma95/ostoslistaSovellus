@@ -49,7 +49,6 @@ def products_create(groupId):
     form = ProductForm(request.form)
 
     if not form.validate():
-        print("HALOO ----------------")
         return redirect(url_for("group_page", groupId=groupId, error=form.name.errors))
 
     newProduct = Product(name=form.name.data,

@@ -3,16 +3,28 @@ from flask_login import current_user, login_required
 
 from application import app, db
 from application.groups.models import Group
-from application.groups.forms import GroupForm
+from application.groups.forms import GroupForm, UserListForm
+from application.auth.models import User
 from application.products.models import Product
 
 from application.products.forms import ProductForm
 
 
-@app.route("/groups/<groupId>/info")
+@app.route("/groups/<groupId>/info", methods=["POST", "GET"])
 def group_info(groupId):
+    userList = User.query.all()
+    userlistForm = UserListForm()
+    userlistForm.username.choices = [(user.id, user.name) for user in userList]
+
+    if request.method == "POST":
+        group = Group.query.get(groupId)
+        group.users.append(User.query.get(userlistForm.username.data))
+        db.session().commit()
+
     return render_template("groups/groupInfo.html",
-                           users=Group.query.get(groupId).users)
+                           users=Group.query.get(groupId).users,
+                           form=userlistForm,
+                           groupId=groupId)
 
 
 @app.route("/groups/")
