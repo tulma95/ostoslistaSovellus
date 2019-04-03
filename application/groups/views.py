@@ -9,6 +9,12 @@ from application.products.models import Product
 from application.products.forms import ProductForm
 
 
+@app.route("/groups/<groupId>/info")
+def group_info(groupId):
+    return render_template("groups/groupInfo.html",
+                           users=Group.query.get(groupId).users)
+
+
 @app.route("/groups/")
 @login_required
 def groups_index():
@@ -31,18 +37,10 @@ def group_page(groupId):
 @login_required
 def groups_create():
     form = GroupForm(request.form)
-
-    """if not form.validate():
-        print("VIRHEET ----------------------------")
-        print(form.name.errors)
-        print("-------------------------------------")
-        return render_template("groups/list.html",
-                               groups=Group.query.all(),
-                               form=form)"""
-
     newGroup = Group(name=form.name.data,
                      groupCreator=current_user.username)
 
     db.session().add(newGroup)
+    newGroup.users.append(current_user)
     db.session().commit()
     return redirect(url_for("groups_index"))
