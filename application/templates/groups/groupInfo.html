@@ -2,7 +2,12 @@
 
 
 {% block body %}
-<input type="button" value="Back" onclick="window.history.back()" />
+
+
+
+<form action="{{ url_for('group_page', groupId = groupId) }}">
+  <input type="submit" value="Back">
+</form>
 
 <h3>Group users</h3>
 <ul>

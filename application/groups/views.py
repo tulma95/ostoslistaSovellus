@@ -6,6 +6,7 @@ from application.groups.models import Group
 from application.groups.forms import GroupForm, UserListForm
 from application.auth.models import User
 from application.products.models import Product
+from sqlalchemy.sql import text
 
 from application.products.forms import ProductForm
 
@@ -30,8 +31,12 @@ def group_info(groupId):
 @app.route("/groups/")
 @login_required
 def groups_index():
+
+    query = db.session.query(Group).join(
+        Group.users).filter(User.id == current_user.id)
+
     return render_template("groups/list.html",
-                           groups=Group.query.all(),
+                           groups=query,
                            form=GroupForm())
 
 
