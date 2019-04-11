@@ -11,16 +11,26 @@ from sqlalchemy.sql import *
 from application.products.forms import ProductForm
 
 
+@app.route("/groups/<groupId>/info/deleteuser", methods=["POST", "GET"])
+def group_delete_user(groupId):
+    group = Group.query.get(groupId)
+    group.users.remove(current_user)
+    db.session().commit()
+
+    return redirect(url_for("groups_index", groupId=groupId))
+
+
 @app.route("/groups/<groupId>/info", methods=["POST", "GET"])
 def group_info(groupId):
     userList = User.query.all()
     group = Group.query.get(groupId)
     # query = db.session.query(User).join(
-    #     Group.users).filter(User.id.notin_(Group.query.get(groupId).users))
+    #     Group.users).filter(User.id.notin_(Group_users)
+
+    # q = User.query.filter(Group.query.get(groupId))
 
     print('--------')
     print(group.groupCreator)
-    print(current_user.username)
 
     # filtered = User.query.filter(User.id.in_(Group.query.get(groupId).users))
     # print('-------------------')
@@ -39,7 +49,7 @@ def group_info(groupId):
                            users=Group.query.get(groupId).users,
                            form=userlistForm,
                            groupId=groupId,
-                           group = group)
+                           group=group)
 
 
 @app.route("/groups/")

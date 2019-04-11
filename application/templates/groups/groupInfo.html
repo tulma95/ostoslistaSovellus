@@ -16,6 +16,10 @@
   {% endfor %}
 </ul>
 
+<form method="POST" action="{{ url_for('group_delete_user', groupId = groupId) }}">
+  <input type="submit" value="Leave group">
+</form>
+
 {% if current_user.username == group.groupCreator %}
 <form method="POST">
   {{ form.username }}
