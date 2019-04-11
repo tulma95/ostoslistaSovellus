@@ -16,9 +16,10 @@
   {% endfor %}
 </ul>
 
+{% if current_user.username == group.groupCreator %}
 <form method="POST">
   {{ form.username }}
   <input type="submit" value="Add user to group">
 </form>
-
+{% endif %}
 {% endblock %}

@@ -6,7 +6,7 @@ from application.groups.models import Group
 from application.groups.forms import GroupForm, UserListForm
 from application.auth.models import User
 from application.products.models import Product
-from sqlalchemy.sql import text
+from sqlalchemy.sql import *
 
 from application.products.forms import ProductForm
 
@@ -14,6 +14,19 @@ from application.products.forms import ProductForm
 @app.route("/groups/<groupId>/info", methods=["POST", "GET"])
 def group_info(groupId):
     userList = User.query.all()
+    group = Group.query.get(groupId)
+    # query = db.session.query(User).join(
+    #     Group.users).filter(User.id.notin_(Group.query.get(groupId).users))
+
+    print('--------')
+    print(group.groupCreator)
+    print(current_user.username)
+
+    # filtered = User.query.filter(User.id.in_(Group.query.get(groupId).users))
+    # print('-------------------')
+    # print(filtered)
+    # usersInGroup = Group.query.get(groupId).users
+
     userlistForm = UserListForm()
     userlistForm.username.choices = [(user.id, user.name) for user in userList]
 
@@ -25,7 +38,8 @@ def group_info(groupId):
     return render_template("groups/groupInfo.html",
                            users=Group.query.get(groupId).users,
                            form=userlistForm,
-                           groupId=groupId)
+                           groupId=groupId,
+                           group = group)
 
 
 @app.route("/groups/")
