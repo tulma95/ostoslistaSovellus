@@ -6,7 +6,7 @@ from application.groups.models import Group
 from application.groups.forms import GroupForm, UserListForm
 from application.auth.models import User
 from application.products.models import Product
-from sqlalchemy.sql import *
+from sqlalchemy.sql import text
 
 from application.products.forms import ProductForm
 
@@ -22,28 +22,31 @@ def group_delete_user(groupId):
 
 @app.route("/groups/<groupId>/info", methods=["POST", "GET"])
 def group_info(groupId):
-    userList = User.query.all()
     group = Group.query.get(groupId)
-    # query = db.session.query(User).join(
-    #     Group.users).filter(User.id.notin_(Group_users)
-
-    # q = User.query.filter(Group.query.get(groupId))
-
-    print('--------')
-    print(group.groupCreator)
-
-    # filtered = User.query.filter(User.id.in_(Group.query.get(groupId).users))
-    # print('-------------------')
-    # print(filtered)
-    # usersInGroup = Group.query.get(groupId).users
-
     userlistForm = UserListForm()
-    userlistForm.username.choices = [(user.id, user.name) for user in userList]
 
     if request.method == "POST":
-        group = Group.query.get(groupId)
         group.users.append(User.query.get(userlistForm.username.data))
         db.session().commit()
+
+    stmt = text('''
+    SELECT * FROM Account WHERE Account.id 
+    NOT IN(SELECT Account.id 
+        FROM Account 
+        JOIN group_users ON Account.id = group_users.account_id
+        JOIN Grp ON group_users.group_id = Grp.id
+        WHERE Grp.id = :groupId)
+    ''').params(groupId=groupId)
+
+    res = db.engine.execute(stmt)
+    usersNotInGroup = []
+    for row in res:
+        usersNotInGroup.append(row)
+    print('-------------------')
+    print(usersNotInGroup)
+
+    userlistForm.username.choices = [
+        (user.id, user.name) for user in usersNotInGroup]
 
     return render_template("groups/groupInfo.html",
                            users=Group.query.get(groupId).users,

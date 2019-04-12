@@ -3,14 +3,17 @@ from application import db
 group_users = db.Table('group_users',
                        db.Column('account_id', db.Integer,
                                  db.ForeignKey('account.id')),
-                       db.Column('group_id', db.Integer, db.ForeignKey('group.id')))
+                       db.Column('group_id', db.Integer, db.ForeignKey('grp.id')))
 
 
 class Group(db.Model):
+
+    __tablename__ = "grp"
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     groupCreator = db.Column(db.String(50), nullable=False)
-    products = db.relationship('Product', backref='group', lazy=True)
+    products = db.relationship('Product', backref='grp', lazy=True)
     users = db.relationship('User',
                             secondary=group_users,
                             backref=db.backref('groupUsers', lazy='dynamic'))
