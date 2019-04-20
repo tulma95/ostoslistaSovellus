@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<p>name: {{ current_user.name }}</p>
+<p>username: {{ current_user.username }}</p>
+
+<form method="POST">
+  <input type="submit" value="Delete account">
+</form>
+
+{% endblock %}

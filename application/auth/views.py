@@ -7,6 +7,15 @@ from application.auth.models import User
 from application.auth.forms import LoginForm, RegisterForm
 
 
+
+@app.route("/auth/info", methods=["POST", "GET"])
+def account_info():
+
+    if request.method == "POST":
+        return redirect(url_for("index"))
+
+    return render_template("auth/accountInfo.html")
+
 @app.route("/auth/login", methods=["GET", "POST"])
 def auth_login():
     if request.method == "GET":
@@ -23,6 +32,7 @@ def auth_login():
 
     login_user(user)
     return redirect(url_for("index"))
+
 
 @app.route("/auth/register")
 def auth_register():
