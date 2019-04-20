@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
 <head>
@@ -39,13 +39,7 @@
     </div>
   </nav>
 
-  <main role="main" class="container">
-    {% block body %}
-    <p>
-      content
-    </p>
-    {% endblock %}
-  </main>
+
 
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -57,6 +51,89 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
   </script>
+
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Shoppinglist</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="{{url_for('.static', filename='vendor/bootstrap/css/bootstrap.min.css')}}">
+
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="{{url_for('.static', filename='css/simple-sidebar.css')}}">
+
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Shoppinglist app </div>
+      <div class="list-group list-group-flush">
+
+        {% if current_user.is_authenticated %}
+        <p class="list-group-item list-group-item-action bg-light">Logged in as {{ current_user.name }}.</p>
+        <a href="{{ url_for('groups_index') }}" class="list-group-item list-group-item-action bg-light">My groups</a>
+        <a href="{{ url_for('auth_logout') }}" class="list-group-item list-group-item-action bg-light">Logout</a>
+        {% else %}
+        <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a> -->
+        <a href="{{ url_for('auth_login') }}" class="list-group-item list-group-item-action bg-light">Login &nbsp;</a>
+        <a href="{{ url_for('auth_register') }}" class="list-group-item list-group-item-action bg-light">Register</a>
+
+        {% endif %}
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+      </nav>
+
+      <div class="container-fluid">
+        <main role="main" class="container">
+          {% block body %}
+          <p>content</p>
+          {% endblock %}
+        </main>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+
+  <script src="{{url_for('.static', filename='vendor/jquery/jquery.min.js')}}"></script>
+  <script src="{{url_for('.static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+
 
 </body>
 
