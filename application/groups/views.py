@@ -42,8 +42,6 @@ def group_info(groupId):
     usersNotInGroup = []
     for row in res:
         usersNotInGroup.append(row)
-    print('-------------------')
-    print(usersNotInGroup)
 
     userlistForm.username.choices = [
         (user.id, user.name) for user in usersNotInGroup]

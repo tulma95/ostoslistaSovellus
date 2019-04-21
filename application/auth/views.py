@@ -1,20 +1,30 @@
 
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 from application import app, db
 from application.auth.models import User
+from application.groups.models import group_users
 from application.auth.forms import LoginForm, RegisterForm
 
+from sqlalchemy.sql import text
 
 
 @app.route("/auth/info", methods=["POST", "GET"])
 def account_info():
 
     if request.method == "POST":
+        stmt = text('''
+        DELETE FROM group_users WHERE account_id = :accountId;'''
+                    ).params(accountId=current_user.id)
+
+        res = db.engine.execute(stmt)
+        User.query.filter_by(id=current_user.id).delete()
+        db.session().commit()
         return redirect(url_for("index"))
 
     return render_template("auth/accountInfo.html")
+
 
 @app.route("/auth/login", methods=["GET", "POST"])
 def auth_login():

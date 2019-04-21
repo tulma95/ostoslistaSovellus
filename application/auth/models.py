@@ -1,4 +1,5 @@
 from application import db
+from application.groups.models import Group, group_users
 
 
 class User(db.Model):
@@ -13,6 +14,12 @@ class User(db.Model):
     name = db.Column(db.String(144), nullable=False)
     username = db.Column(db.String(144), nullable=False)
     password = db.Column(db.String(144), nullable=False)
+    groups = db.relationship('Group',
+                             secondary=group_users,
+                             backref=db.backref('groupUsers',
+                                                lazy='dynamic',
+                                                cascade='all,delete-orphan',
+                                                single_parent=True))
 
     def __init__(self, name, username, password):
         self.name = name

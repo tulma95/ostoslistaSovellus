@@ -2,8 +2,9 @@ from application import db
 
 group_users = db.Table('group_users',
                        db.Column('account_id', db.Integer,
-                                 db.ForeignKey('account.id')),
-                       db.Column('group_id', db.Integer, db.ForeignKey('grp.id')))
+                                 db.ForeignKey('account.id', ondelete='cascade')),
+                       db.Column('group_id', db.Integer,
+                                 db.ForeignKey('grp.id', ondelete='cascade')))
 
 
 class Group(db.Model):
@@ -16,7 +17,8 @@ class Group(db.Model):
     products = db.relationship('Product', backref='grp', lazy=True)
     users = db.relationship('User',
                             secondary=group_users,
-                            backref=db.backref('groupUsers', lazy='dynamic'))
+                            backref=db.backref('groupUsers',
+                                               lazy='dynamic'))
 
     def __init__(self, name, groupCreator):
         self.name = name
