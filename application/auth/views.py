@@ -8,6 +8,7 @@ from application.groups.models import group_users
 from application.auth.forms import LoginForm, RegisterForm
 
 from sqlalchemy.sql import text
+from sqlalchemy import exc
 
 
 @app.route("/auth/info", methods=["POST", "GET"])
@@ -56,11 +57,15 @@ def auth_createUser():
     if not form.validate():
         return render_template("auth/register.html", form=form)
 
-    newUser = User(name=form.name.data, username=form.username.data,
-                   password=form.password.data)
+    try:
+        newUser = User(name=form.name.data, username=form.username.data,
+                       password=form.password.data)
 
-    db.session().add(newUser)
-    db.session().commit()
+        db.session().add(newUser)
+        db.session().commit()
+    except exc.IntegrityError:
+        form.username.errors = ["That username is taken"]
+        return render_template("auth/register.html", form=form)
 
     return redirect(url_for("auth_login"))
 
