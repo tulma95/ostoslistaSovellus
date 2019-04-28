@@ -79,6 +79,14 @@ def group_page(groupId):
 @login_required
 def groups_create():
     form = GroupForm(request.form)
+
+    if not form.validate():
+        query = db.session.query(Group).join(
+            Group.users).filter(User.id == current_user.id)
+        return render_template("groups/list.html",
+                               groups=query,
+                               form=form)
+
     newGroup = Group(name=form.name.data,
                      groupCreator=current_user.username)
 
