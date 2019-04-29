@@ -2,11 +2,15 @@
 {% block body %}
 <table>
   <tr>
-    <th>group name</th>
+    <th>
+      <h1>Groups</h1>
+    </th>
   </tr>
   {% for group in groups %}
   <tr>
-    <td><a href="{{ url_for('group_page', groupId = group.id) }}"> {{ group.name }} </a></td>
+    <td>
+      <a href="{{ url_for('group_page', groupId = group.id) }}" class="btn btn-secondary btn-sm"> {{ group.name }} </a>
+    </td>
   </tr>
   {% endfor %}
 </table>
