@@ -7,11 +7,13 @@ from application.products.forms import ProductForm
 
 
 @app.route("/products/", methods=["GET"])
+@login_required
 def products_list():
     return render_template("products/list.html",
                            products=Product.query.all())
 
 @app.route("/products/remove/<productId>/<groupId>", methods=["POST"])
+@login_required
 def product_remove(productId, groupId):
     Product.query.filter_by(id=productId).delete()
     db.session().commit()

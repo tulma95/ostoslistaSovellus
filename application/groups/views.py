@@ -12,6 +12,7 @@ from application.products.forms import ProductForm
 
 
 @app.route("/groups/<groupId>/info/deleteuser", methods=["POST", "GET"])
+@login_required
 def group_delete_user(groupId):
     group = Group.query.get(groupId)
     group.users.remove(current_user)
@@ -21,6 +22,7 @@ def group_delete_user(groupId):
 
 
 @app.route("/groups/<groupId>/info", methods=["POST", "GET"])
+@login_required
 def group_info(groupId):
     group = Group.query.get(groupId)
     userlistForm = UserListForm()
@@ -66,6 +68,7 @@ def groups_index():
 
 
 @app.route("/groups/<groupId>/")
+@login_required
 def group_page(groupId):
 
     return render_template("products/list.html",
