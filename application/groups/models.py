@@ -61,7 +61,8 @@ class Group(db.Model):
     @staticmethod
     def find_user_groups_and_item_count(userId):
         stmt = text('''
-            SELECT grp.*, (SELECT COUNT(id) FROM product 
+            SELECT grp.id AS id, grp.name AS name, 
+            (SELECT COUNT(id) FROM product 
             WHERE product.groupId = grp.id) 
             AS GroupItemCount 
             FROM grp
