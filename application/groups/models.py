@@ -49,16 +49,19 @@ class Group(db.Model):
     @staticmethod
     def find_user_groups_and_item_count(userId):
         stmt = text('''
-            SELECT grp.*, Count(Product.id) AS GroupItemCount 
+            SELECT grp.*, (SELECT COUNT(id) FROM Product 
+            WHERE Product.groupid = grp.id) 
+            AS GroupItemCount 
             FROM Grp
             LEFT JOIN Product on Product.id = Grp.id
             JOIN group_users ON Grp.id = group_users.group_Id
-            JOIN Account ON account.id = group_users.account_id
-            WHERE Account.id = :userId
-            GROUP BY Product.groupId)
+	    	JOIN Account ON Account.id = group_users.account_Id
+            WHERE Account.Id = :userId
             ''').params(userId=userId)
         res = db.engine.execute(stmt)
         groups = []
         for row in res:
+            print("-----------------------")
+            print(row)
             groups.append(row)
         return groups

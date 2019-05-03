@@ -9,7 +9,10 @@
   {% for group in groups %}
   <tr>
     <td>
-      <a href="{{ url_for('group_page', groupId = group.id) }}" class="btn btn-secondary btn-sm"> {{ group.name }} </a>
+      <a href="{{ url_for('group_page', groupId = group.id) }}" class="btn btn-secondary btn-sm">
+        <p>Group name: {{ group.name }}</p>
+        <p>Unique products: {{ group.GroupItemCount }}</p>
+      </a>
     </td>
   </tr>
   {% endfor %}

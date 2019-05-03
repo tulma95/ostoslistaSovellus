@@ -45,12 +45,11 @@ def group_info(groupId):
 @app.route("/groups/")
 @login_required
 def groups_index():
-
-    query = db.session.query(Group).join(
-        Group.users).filter(User.id == current_user.id)
-
+    groups = Group.find_user_groups_and_item_count(current_user.id)
+    print('-----------------------------')
+    print(len(groups))
     return render_template("groups/list.html",
-                           groups=query,
+                           groups=groups,
                            form=GroupForm())
 
 
@@ -71,10 +70,10 @@ def groups_create():
     form = GroupForm(request.form)
 
     if not form.validate():
-        query = db.session.query(Group).join(
-            Group.users).filter(User.id == current_user.id)
+        print('----------------------------22-')
+        groups = Group.find_user_groups_and_item_count(current_user.id)
         return render_template("groups/list.html",
-                               groups=query,
+                               groups=groups,
                                form=form)
 
     newGroup = Group(name=form.name.data,
@@ -83,4 +82,5 @@ def groups_create():
     db.session().add(newGroup)
     newGroup.users.append(current_user)
     db.session().commit()
+    print('----------------------------')
     return redirect(url_for("groups_index"))
