@@ -8,7 +8,7 @@ class Product(db.Model):
     groupid = db.Column(db.Integer, db.ForeignKey('grp.id'), nullable=False)
 
 
-    def __init__(self, name, count, groupId):
+    def __init__(self, name, count, groupid):
         self.name = name
         self.count = count
         self.groupid = groupId
