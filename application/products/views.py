@@ -57,7 +57,7 @@ def products_create(groupId):
 
     newProduct = Product(name=form.name.data,
                          count=1,
-                         groupId=groupId)
+                         groupid=groupId)
 
     db.session().add(newProduct)
     db.session().commit()
