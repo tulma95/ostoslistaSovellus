@@ -11,4 +11,4 @@ class Product(db.Model):
     def __init__(self, name, count, groupid):
         self.name = name
         self.count = count
-        self.groupid = groupId
+        self.groupid = groupid
