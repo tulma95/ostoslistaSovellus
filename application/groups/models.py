@@ -45,3 +45,20 @@ class Group(db.Model):
         for row in res:
             usersNotInGroup.append(row)
         return usersNotInGroup
+
+    @staticmethod
+    def find_user_groups_and_item_count(userId):
+        stmt = text('''
+            SELECT grp.*, Count(Product.id) AS GroupItemCount 
+            FROM Grp
+            LEFT JOIN Product on Product.id = Grp.id
+            JOIN group_users ON Grp.id = group_users.group_Id
+            JOIN Account ON account.id = group_users.account_id
+            WHERE Account.id = :userId
+            GROUP BY Product.groupId)
+            ''').params(userId=userId)
+        res = db.engine.execute(stmt)
+        groups = []
+        for row in res:
+            groups.append(row)
+        return groups

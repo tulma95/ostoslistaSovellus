@@ -10,6 +10,13 @@ class LoginForm(FlaskForm):
         csrf = False
 
 
+class ChangeUsernameForm(FlaskForm):
+    username = StringField("New username", [validators.length(min=4, max=12)])
+
+    class Meta:
+        csrf = False
+
+
 class RegisterForm(FlaskForm):
     name = StringField("Name")
     username = StringField("Username", [validators.length(min=4, max=12)])

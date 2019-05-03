@@ -5,9 +5,27 @@ from flask_login import login_user, logout_user, current_user, login_required
 from application import app, db
 from application.auth.models import User
 from application.groups.models import group_users
-from application.auth.forms import LoginForm, RegisterForm
+from application.auth.forms import LoginForm, RegisterForm, ChangeUsernameForm
 
 from sqlalchemy import exc
+
+
+@app.route("/auth/changeUsername", methods=["POST"])
+@login_required
+def change_username():
+    form = ChangeUsernameForm(request.form)
+    if not form.validate():
+        return render_template("auth/accountInfo.html", form=form)
+
+    user = User.query.get(current_user.id)
+    user.username = form.username.data
+    db.session().commit()
+
+    newForm = ChangeUsernameForm()
+
+    return render_template("auth/accountInfo.html",
+                           form=newForm,
+                           newUsername=True)
 
 
 @app.route("/auth/info", methods=["POST", "GET"])
@@ -17,7 +35,8 @@ def account_info():
         User.remove_user(current_user.id)
         return redirect(url_for("index"))
 
-    return render_template("auth/accountInfo.html")
+    return render_template("auth/accountInfo.html",
+                           form=ChangeUsernameForm())
 
 
 @app.route("/auth/login", methods=["GET", "POST"])
@@ -31,7 +50,7 @@ def auth_login():
         username=form.username.data, password=form.password.data).first()
     if not user:
         return render_template("auth/loginform.html", form=form,
-                               error="No such username or password")
+                               error="No such username or wrong password")
 
     login_user(user)
     return redirect(url_for("index"))

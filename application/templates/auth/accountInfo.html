@@ -4,6 +4,31 @@
 <p>name: {{ current_user.name }}</p>
 <p>username: {{ current_user.username }}</p>
 
+{% if newUsername %}
+<h2>Username changed</h2>
+{% endif %}
+
+<form method="POST" action="{{ url_for('change_username') }}">
+  <table>
+    <tr>
+      <td>
+        {{ form.username.label }}
+      </td>
+      <td>
+        {{ form.username }}
+      </td>
+      <td>
+        <ul>
+          {% for error in form.username.errors %}
+          <li> {{error}}</li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+  </table>
+  <input type="submit" value="Change username">
+</form>
+
 <form method="POST">
   <input type="submit" value="Delete account">
 </form>
