@@ -6,7 +6,6 @@ from application.groups.models import Group
 from application.groups.forms import GroupForm, UserListForm
 from application.auth.models import User
 from application.products.models import Product
-from sqlalchemy.sql import text
 
 from application.products.forms import ProductForm
 
@@ -31,19 +30,7 @@ def group_info(groupId):
         group.users.append(User.query.get(userlistForm.username.data))
         db.session().commit()
 
-    stmt = text('''
-    SELECT * FROM Account WHERE Account.id 
-    NOT IN(SELECT Account.id 
-        FROM Account 
-        JOIN group_users ON Account.id = group_users.account_id
-        JOIN Grp ON group_users.group_id = Grp.id
-        WHERE Grp.id = :groupId)
-    ''').params(groupId=groupId)
-
-    res = db.engine.execute(stmt)
-    usersNotInGroup = []
-    for row in res:
-        usersNotInGroup.append(row)
+    usersNotInGroup = Group.find_users_not_in_group(groupId)
 
     userlistForm.username.choices = [
         (user.id, user.name) for user in usersNotInGroup]

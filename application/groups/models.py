@@ -1,4 +1,6 @@
 from application import db
+from sqlalchemy.sql import text
+
 
 group_users = db.Table('group_users',
                        db.Column('account_id', db.Integer,
@@ -26,3 +28,20 @@ class Group(db.Model):
 
     def get_id(self):
         return self.id
+
+    @staticmethod
+    def find_users_not_in_group(groupId):
+        stmt = text('''
+            SELECT * FROM Account WHERE Account.id 
+            NOT IN(SELECT Account.id 
+            FROM Account 
+            JOIN group_users ON Account.id = group_users.account_id
+            JOIN Grp ON group_users.group_id = Grp.id
+            WHERE Grp.id = :groupId)
+            ''').params(groupId=groupId)
+
+        res = db.engine.execute(stmt)
+        usersNotInGroup = []
+        for row in res:
+            usersNotInGroup.append(row)
+        return usersNotInGroup
