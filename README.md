@@ -16,6 +16,10 @@ password: world
 
 [user storyt](https://github.com/tulma95/ostoslistaSovellus/blob/master/documentation/userStories.md)
 
+[Create table-lauseet](https://github.com/tulma95/ostoslistaSovellus/blob/master/documentation/createTable.md)
+
+[Loppusanat](https://github.com/tulma95/ostoslistaSovellus/blob/master/documentation/loppusanat.md)
+
 ## Asennusohjeet (Linux)
 
 1. Siirry terminaalissa haluamaasi kansioon cd komennolla
