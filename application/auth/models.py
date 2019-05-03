@@ -1,11 +1,11 @@
 from application import db
 from application.groups.models import Group, group_users
+from sqlalchemy.sql import text
 
 
 class User(db.Model):
 
     __tablename__ = "account"
-    # __table_args__ = (db.UniqueConstraint('username'), )
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
@@ -37,3 +37,13 @@ class User(db.Model):
 
     def is_authenticated(self):
         return True
+
+    @staticmethod
+    def remove_user(userId):
+        stmt = text('''
+        DELETE FROM group_users WHERE account_id = :accountId;'''
+                    ).params(accountId=userId)
+
+        res = db.engine.execute(stmt)
+        User.query.filter_by(id=userId).delete()
+        db.session().commit()

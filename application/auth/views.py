@@ -1,27 +1,18 @@
 
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 from application import app, db
 from application.auth.models import User
 from application.groups.models import group_users
 from application.auth.forms import LoginForm, RegisterForm
 
-from sqlalchemy.sql import text
-from sqlalchemy import exc
-
 
 @app.route("/auth/info", methods=["POST", "GET"])
+@login_required
 def account_info():
-
     if request.method == "POST":
-        stmt = text('''
-        DELETE FROM group_users WHERE account_id = :accountId;'''
-                    ).params(accountId=current_user.id)
-
-        res = db.engine.execute(stmt)
-        User.query.filter_by(id=current_user.id).delete()
-        db.session().commit()
+        User.remove_user(current_user.id)
         return redirect(url_for("index"))
 
     return render_template("auth/accountInfo.html")
@@ -33,7 +24,6 @@ def auth_login():
         return render_template("auth/loginform.html", form=LoginForm())
 
     form = LoginForm(request.form)
-    # mahdolliset validoinnit
 
     user = User.query.filter_by(
         username=form.username.data, password=form.password.data).first()
@@ -71,6 +61,7 @@ def auth_createUser():
 
 
 @app.route("/auth/logout")
+@login_required
 def auth_logout():
     logout_user()
     return redirect(url_for("index"))
