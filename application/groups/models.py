@@ -38,7 +38,7 @@ class Group(db.Model):
                     ).params(groupId=groupId)
         res = db.engine.execute(stmt)
         Group.query.filter_by(id=groupId).delete()
-        Product.query.filter_by(groupId=groupId).delete()
+        Product.query.filter_by(groupid=groupId).delete()
         db.session().commit()
 
     @staticmethod
