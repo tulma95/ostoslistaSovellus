@@ -54,3 +54,13 @@ DELETE FROM group_users
 INSERT INTO group_users (account_id, group_id)
   VALUES (?, ?);
 ```
+
+### Ryhmien listaaminen ja tuotteiden määrän hakeminen
+```
+SELECT grp.*, (SELECT COUNT(id) FROM Product WHERE Product.groupid = grp.id) AS GroupItemCount
+  FROM Grp
+  LEFT JOIN Product on Product.id = Grp.id
+  JOIN group_users ON Grp.id = group_users.group_Id
+  JOIN Account ON Account.id = group_users.account_Id
+  WHERE Account.Id = ?
+```
