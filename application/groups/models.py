@@ -44,12 +44,12 @@ class Group(db.Model):
     @staticmethod
     def find_users_not_in_group(groupId):
         stmt = text('''
-            SELECT * FROM Account WHERE Account.id 
-            NOT IN(SELECT Account.id 
-            FROM Account 
-            JOIN group_users ON Account.id = group_users.account_id
-            JOIN Grp ON group_users.group_id = Grp.id
-            WHERE Grp.id = :groupId)
+            SELECT * FROM account WHERE account.id 
+            NOT IN(SELECT account.id 
+            FROM account 
+            JOIN group_users ON account.id = group_users.account_id
+            JOIN grp ON group_users.group_id = grp.id
+            WHERE grp.id = :groupId)
             ''').params(groupId=groupId)
 
         res = db.engine.execute(stmt)
@@ -61,14 +61,14 @@ class Group(db.Model):
     @staticmethod
     def find_user_groups_and_item_count(userId):
         stmt = text('''
-            SELECT grp.*, (SELECT COUNT(id) FROM Product 
-            WHERE Product.groupid = grp.id) 
+            SELECT grp.*, (SELECT COUNT(id) FROM product 
+            WHERE product.groupid = grp.id) 
             AS GroupItemCount 
-            FROM Grp
-            LEFT JOIN Product on Product.id = Grp.id
-            JOIN group_users ON Grp.id = group_users.group_Id
-	    	JOIN Account ON Account.id = group_users.account_Id
-            WHERE Account.Id = :userId
+            FROM grp
+            LEFT JOIN product on product.id = grp.id
+            JOIN group_users ON grp.id = group_users.group_Id
+	    	JOIN account ON account.id = group_users.account_Id
+            WHERE account.Id = :userId
             ''').params(userId=userId)
         res = db.engine.execute(stmt)
         groups = []
