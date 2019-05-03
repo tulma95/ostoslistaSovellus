@@ -68,15 +68,17 @@ def auth_createUser():
     if not form.validate():
         return render_template("auth/register.html", form=form)
 
-    try:
-        newUser = User(name=form.name.data, username=form.username.data,
-                       password=form.password.data)
+    checkUser = User.query.filter_by(username=form.username.data).first()
 
-        db.session().add(newUser)
-        db.session().commit()
-    except exc.IntegrityError:
+    if checkUser:
         form.username.errors = ["That username is already taken"]
         return render_template("auth/register.html", form=form)
+
+    newUser = User(name=form.name.data, username=form.username.data,
+                   password=form.password.data)
+
+    db.session().add(newUser)
+    db.session().commit()
 
     return redirect(url_for("auth_login"))
 
