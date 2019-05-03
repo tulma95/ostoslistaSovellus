@@ -19,6 +19,9 @@
 </form>
 
 {% if current_user.username == group.groupCreator  %}
+<form method="POST" action="{{ url_for('group_delete', groupId = groupId) }}">
+  <input type="submit" value="delete group">
+</form>
 
 {% if form.username.choices %}
 <form method="POST">
@@ -27,9 +30,7 @@
 </form>
 {% endif %}
 
-<form method="POST" action="{{ url_for('group_delete', groupId = groupId) }}">
-  <input type="submit" value="delete group">
-</form>
+
 
 {% endif %}
 
