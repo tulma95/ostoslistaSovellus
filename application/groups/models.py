@@ -64,7 +64,7 @@ class Group(db.Model):
             SELECT grp.id AS id, grp.name AS name, 
             (SELECT COUNT(id) FROM product 
             WHERE product.groupId = grp.id) 
-            AS GroupItemCount 
+            AS groupitemcount 
             FROM grp
             LEFT JOIN product on product.id = grp.id
             JOIN group_users ON grp.id = group_users.group_id
