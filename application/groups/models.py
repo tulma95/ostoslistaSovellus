@@ -73,7 +73,5 @@ class Group(db.Model):
         res = db.engine.execute(stmt)
         groups = []
         for row in res:
-            print("-----------------------")
-            print(row)
             groups.append(row)
         return groups

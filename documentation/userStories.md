@@ -1,13 +1,13 @@
 ## Käyttötapaukset
 |Rooli          | Haluan...                    |Jotta...                                                         | Tilanne  |
-|-              |-                             |-                                                                |-        |
-|Käyttäjä       |rekisteröidä uuden käyttäjän  |voin liittyä ryhmiin                                             | OK      |
-|Käyttäjä       |poistaa käyttäjäni            |voin poistaa poistaa käyttäjäni, kun sille ei ole enää tarvetta  | OK      |
-|Käyttäjä       |tehdä uusia ryhmiä            |voin tehdä ostoslistan ryhmälle                                  | OK      |
-|Käyttäjä       |lisätä tuotteita ostoslistaan |ryhmän jäsenet tietävät mitä kaupasta tarvitaan         	       | OK      |
-|Käyttäjä	      |poistua ryhmästä              |voin lähteä ryhmästä, johon en halua kuulua                      | OK      |
-|Ryhmän tekijä  |lisätä käyttäjiä ryhmään      |ryhmässä ei olisi yksinäistä	                                   | OK      |
-|Ryhmän tekijä  |poistaa ryhmän                |voin poistaa turhat ryhmät                                       | Kesken  |
+|-              |-                             |-                                                                |-         |
+|Käyttäjä       |rekisteröidä uuden käyttäjän  |voin liittyä ryhmiin                                             | OK       |
+|Käyttäjä       |poistaa käyttäjäni            |voin poistaa poistaa käyttäjäni, kun sille ei ole enää tarvetta  | OK       |
+|Käyttäjä       |tehdä uusia ryhmiä            |voin tehdä ostoslistan ryhmälle                                  | OK       |
+|Käyttäjä       |lisätä tuotteita ostoslistaan |ryhmän jäsenet tietävät mitä kaupasta tarvitaan         	       | OK       |
+|Käyttäjä	      |poistua ryhmästä              |voin lähteä ryhmästä, johon en halua kuulua                      | OK       |
+|Ryhmän tekijä  |lisätä käyttäjiä ryhmään      |ryhmässä ei olisi yksinäistä	                                   | OK       |
+|Ryhmän tekijä  |poistaa ryhmän                |voin poistaa turhat ryhmät                                       | OK       |
 
 
 ## SQL-kyselyt
