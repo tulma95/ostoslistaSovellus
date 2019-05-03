@@ -1,6 +1,6 @@
 from application import db
 from sqlalchemy.sql import text
-
+from application.products.models import Product
 
 group_users = db.Table('group_users',
                        db.Column('account_id', db.Integer,
@@ -16,7 +16,9 @@ class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     groupCreator = db.Column(db.String(50), nullable=False)
-    products = db.relationship('Product', backref='grp', lazy=True)
+    products = db.relationship('Product',
+                               backref='grp',
+                               lazy=True)
     users = db.relationship('User',
                             secondary=group_users,
                             backref=db.backref('groupUsers',
@@ -28,6 +30,16 @@ class Group(db.Model):
 
     def get_id(self):
         return self.id
+
+    @staticmethod
+    def delete_group(groupId):
+        stmt = text('''
+        DELETE FROM group_users WHERE group_id = :groupId;'''
+                    ).params(groupId=groupId)
+        res = db.engine.execute(stmt)
+        Group.query.filter_by(id=groupId).delete()
+        Product.query.filter_by(groupId=groupId).delete()
+        db.session().commit()
 
     @staticmethod
     def find_users_not_in_group(groupId):

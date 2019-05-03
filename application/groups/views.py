@@ -17,7 +17,14 @@ def group_delete_user(groupId):
     group.users.remove(current_user)
     db.session().commit()
 
-    return redirect(url_for("groups_index", groupId=groupId))
+    return redirect(url_for("groups_index"))
+
+
+@app.route("/groups/<groupId>/delete", methods=["POST"])
+@login_required
+def group_delete(groupId):
+    Group.delete_group(groupId)
+    return redirect(url_for("groups_index"))
 
 
 @app.route("/groups/<groupId>/info", methods=["POST", "GET"])
@@ -46,8 +53,6 @@ def group_info(groupId):
 @login_required
 def groups_index():
     groups = Group.find_user_groups_and_item_count(current_user.id)
-    print('-----------------------------')
-    print(len(groups))
     return render_template("groups/list.html",
                            groups=groups,
                            form=GroupForm())
