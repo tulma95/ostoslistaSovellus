@@ -61,9 +61,8 @@ def groups_index():
 @app.route("/groups/<groupId>/")
 @login_required
 def group_page(groupId):
-
     return render_template("products/list.html",
-                           products=Product.query.filter_by(groupId=groupId),
+                           products=Product.query.filter_by(groupid=groupId),
                            group=Group.query.get(groupId),
                            form=ProductForm(),
                            error=request.args.get("error"))
