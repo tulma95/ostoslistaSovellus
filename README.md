@@ -27,6 +27,24 @@ password: world
 7. Käynnistä sovellus komennolla ``python3 run.py``
 8. Mene selaimella osoitteeseen ``localhost:5000``
 
+## Asennusohjeet (Heroku)
+
+1. Luo uusi heroku sovellus komennolla ``heroku create *nimi*``
+2. Lisää Herokun tiedot Git-versionhallintaan ``git remote add heroku https://git.heroku.com/*sovelluksenNimi*.git``
+3. Tee ensimmäinen committi ja puske se herokuun 
+```
+git add .
+git commit -m "Initial commit"
+git push heroku master
+```
+4. Lisää herokuun tarvittavat asetukset, jotta tietokannan saa toimimaan
+```
+heroku config:set HEROKU=1
+heroku addons:add heroku-postgresql:hobby-dev
+```
+5. Uudelleenkäynnistä heroku komennolla ``heroku restart``
+
+
 ## Käyttöohjeet
 
 ### Sisäänkirjautumaton käyttäjä
