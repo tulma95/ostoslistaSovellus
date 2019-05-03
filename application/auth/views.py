@@ -7,6 +7,8 @@ from application.auth.models import User
 from application.groups.models import group_users
 from application.auth.forms import LoginForm, RegisterForm
 
+from sqlalchemy import exc
+
 
 @app.route("/auth/info", methods=["POST", "GET"])
 @login_required
@@ -54,7 +56,7 @@ def auth_createUser():
         db.session().add(newUser)
         db.session().commit()
     except exc.IntegrityError:
-        form.username.errors = ["That username is taken"]
+        form.username.errors = ["That username is already taken"]
         return render_template("auth/register.html", form=form)
 
     return redirect(url_for("auth_login"))
