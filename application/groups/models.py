@@ -62,12 +62,12 @@ class Group(db.Model):
     def find_user_groups_and_item_count(userId):
         stmt = text('''
             SELECT grp.*, (SELECT COUNT(id) FROM product 
-            WHERE product.groupid = grp.id) 
+            WHERE product.groupId = grp.id) 
             AS GroupItemCount 
             FROM grp
             LEFT JOIN product on product.id = grp.id
-            JOIN group_users ON grp.id = group_users.group_Id
-	    	JOIN account ON account.id = group_users.account_Id
+            JOIN group_users ON grp.id = group_users.group_id
+	    	JOIN account ON account.id = group_users.account_id
             WHERE account.Id = :userId
             ''').params(userId=userId)
         res = db.engine.execute(stmt)
