@@ -4,6 +4,7 @@
 |Käyttäjä       |rekisteröidä uuden käyttäjän  |voin liittyä ryhmiin                                             | OK       |
 |Käyttäjä       |poistaa käyttäjäni            |voin poistaa poistaa käyttäjäni, kun sille ei ole enää tarvetta  | OK       |
 |Käyttäjä       |tehdä uusia ryhmiä            |voin tehdä ostoslistan ryhmälle                                  | OK       |
+|Käyttäjä       |vaihtaa nimimerkkini          |voin vaihtaa nimeä                                               | OK       |
 |Käyttäjä       |lisätä tuotteita ostoslistaan |ryhmän jäsenet tietävät mitä kaupasta tarvitaan         	       | OK       |
 |Käyttäjä	      |poistua ryhmästä              |voin lähteä ryhmästä, johon en halua kuulua                      | OK       |
 |Ryhmän tekijä  |lisätä käyttäjiä ryhmään      |ryhmässä ei olisi yksinäistä	                                   | OK       |

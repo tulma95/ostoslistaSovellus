@@ -68,7 +68,7 @@ Kirjautuakseen sisään käyttäjän pitää syöttää hänen käyttäjätilins
 Käyttäjän kirjautuessa sisään, vasemmalla olevaan valikkoon tulee kolme eri vaihtoehtoa jotka ovat "My account", "My groups" ja "Logout".
 
 #### My account-näkymä ####
-My account-näkymässä käyttäjä voi tarkastella käyttäjätilinsä tietoja tai poistaa käyttäjätilin Delete account-napilla.
+My account-näkymässä käyttäjä voi tarkastella käyttäjätilinsä tietoja tai poistaa käyttäjätilin Delete account-napilla. Käyttäjänimen vaihto onnistuu kirjoittamalla kenttään uuden nimen ja painamalla nappia.
 
 #### My groups-näkymä ####
 My groups-näkymässä käyttäjälle näytetään lista ryhmistä joihin hänen käyttäjätili on liitetty. Käyttäjä voi myös halutessaan lisätä uuden ryhmän kirjoittamalla esillä olevaan tekstikenttään uuden ryhmän nimen ja painamalla Add new group-nappia. Klikkaamalla ryhmän nimeä, näkymä siirtyy klikatun ryhmän ostoslistaan.
